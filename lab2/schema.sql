@@ -34,6 +34,7 @@ CREATE TABLE student_groups (
     group_number TEXT NOT NULL UNIQUE,
     formation_year INTEGER NOT NULL CHECK (formation_year > 2000)
 );
+
 CREATE TABLE students (
     student_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     record_book_number TEXT NOT NULL UNIQUE,
@@ -41,10 +42,14 @@ CREATE TABLE students (
     last_name TEXT NOT NULL,
     first_name TEXT NOT NULL,
     patronymic TEXT,
-    permanent_address TEXT NOT NULL,
-    current_address TEXT NOT NULL,
-    is_nonresident BOOLEAN NOT NULL DEFAULT FALSE,
-    scholarship_percent INTEGER NOT NULL DEFAULT 0 CHECK (scholarship_percent IN (0, 100, 150, 200))
+    permanent_city TEXT NOT NULL,
+    permanent_street TEXT NOT NULL,
+    permanent_building TEXT NOT NULL,
+    current_city TEXT NOT NULL,
+    current_street TEXT NOT NULL,
+    current_building TEXT NOT NULL,
+    scholarship_percent INTEGER NOT NULL DEFAULT 0
+        CHECK (scholarship_percent IN (0, 100, 150, 200))
 );
 
 CREATE TABLE subjects (
