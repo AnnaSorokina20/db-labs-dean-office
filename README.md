@@ -1,3 +1,4 @@
+[Lab2_Sorokina.docx](https://github.com/user-attachments/files/33071616/Lab2_Sorokina.docx)
 # db-labs-dean-office
 Дисципліна: «Програмування баз даних та знань».
 Варіант 15: інформаційна система деканату (групи, студенти, результати сесії).
