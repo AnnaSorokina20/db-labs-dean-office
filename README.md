@@ -22,7 +22,8 @@
 | `query_2.sql` | Середній бал кожної групи вказаного факультету |
 | `query_3.sql` | Середній бал з кожного предмета |
 | `query_4.sql` | Студенти кафедри, які можуть отримувати стипендію (із розміром) |
-| `Lab2_Sorokina.docx` | Звіт |
+| `Lab2_Sorokina.docx` | Звіт для Лаб2 |
+| `Lab1_Sorokina.docx` | Звіт для Лаб1 |
 
 Таблиці: `faculties`, `departments`, `specialties`, `student_groups`, `students`,
 `subjects`, `group_subjects`, `session_results` (3НФ).
