@@ -78,3 +78,25 @@ CREATE TABLE session_results (
         (grade IS NULL AND credit_passed IS NOT NULL)
     )
 );
+
+CREATE FUNCTION check_result_type() RETURNS TRIGGER
+LANGUAGE plpgsql AS $$
+DECLARE
+    control_type TEXT;
+BEGIN
+    SELECT assessment_type INTO control_type
+    FROM group_subjects
+    WHERE group_subject_id = NEW.group_subject_id;
+
+    IF (control_type = 'exam' AND NEW.grade IS NULL)
+       OR (control_type = 'credit' AND NEW.credit_passed IS NULL) THEN
+        RAISE EXCEPTION 'Result does not match assessment type';
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER check_result_type_trigger
+BEFORE INSERT OR UPDATE ON session_results
+FOR EACH ROW EXECUTE FUNCTION check_result_type();
