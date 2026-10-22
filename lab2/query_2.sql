@@ -14,6 +14,7 @@ JOIN session_results sr
     ON sr.student_id = s.student_id
 JOIN group_subjects gs
     ON gs.group_subject_id = sr.group_subject_id
+    AND gs.group_id = s.group_id
 WHERE f.name = 'Факультет комп''ютерних наук'
   AND gs.assessment_type = 'exam'
   AND sr.grade IS NOT NULL
