@@ -65,4 +65,25 @@
 
 Перегляд таблиць: `\dt`. Вихід: `\q`.
 
+## Лабораторна робота 3. Взаємодія з базою даних через ORM
+
+У папці `lab3/` реалізовано програму на Python із використанням SQLAlchemy ORM та Click: моделі восьми таблиць, тестові дані, запити, операції зміни даних і тригери PostgreSQL.
+
+Запуск із папки `lab3/`:
+
+```bash
+docker compose up -d --build
+docker compose exec postgres_db pg_isready -U testuser -d lab3
+```
+
+Після повідомлення `accepting connections`:
+
+```bash
+docker compose exec python_app python cli.py create-tables
+docker compose exec python_app python cli.py fill-db
+docker compose exec python_app python cli.py --help
+```
+
+`fill-db` виконується один раз для порожньої бази.
+Повна інструкція та перелік команд: [lab3/README.txt](lab3/README.txt).
 Підключення з хоста (pgAdmin тощо): порт `5434`, користувач `postgres`, пароль `foo`.
