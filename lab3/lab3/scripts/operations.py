@@ -203,8 +203,7 @@ def transfer_student(student_id, new_group_id):
 
             transfers.append((result, subject_map[key]))
 
-        for result, new_subject_id in transfers:
-            result.group_subject_id = new_subject_id
+
 
         student.group_id = new_group_id
         student.scholarship_percent = 0

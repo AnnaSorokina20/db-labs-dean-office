@@ -4,6 +4,7 @@ from scripts import database, operations
 from api.engine import DBConn
 from models.base import myBase
 from queries import common
+from pathlib import Path
 
 # IMPORTANT: all models should be imported before the call to
 #            myBase.metadata.create_all();
@@ -19,11 +20,33 @@ def cli():
     DBConn()
 
 
-@cli.command(help='Створити таблиці в БД')
+@cli.command(help='Створити таблиці та тригери в БД')
 def create_tables():
-    # Щоб створити логічну структуру даних, визначену в метаданих, потрібно викликати метод
-    # metadata.create_all(engine).
-    myBase.metadata.create_all(DBConn.engine)
+    sql_path = Path(__file__).parent / 'scripts' / 'triggers.sql'
+    trigger_sql = sql_path.read_text(encoding='utf-8-sig')
+    trigger_sql = trigger_sql.replace(
+        'CREATE FUNCTION', 'CREATE OR REPLACE FUNCTION'
+    )
+
+    with DBConn.engine.begin() as connection:
+        myBase.metadata.create_all(connection)
+
+        connection.exec_driver_sql(
+            'DROP TRIGGER IF EXISTS check_result_type_trigger '
+            'ON session_results'
+        )
+        connection.exec_driver_sql(
+            'DROP TRIGGER IF EXISTS check_result_group_trigger '
+            'ON session_results'
+        )
+        connection.exec_driver_sql(
+            'DROP TRIGGER IF EXISTS transfer_student_results_trigger '
+            'ON students'
+        )
+
+        connection.exec_driver_sql(trigger_sql)
+
+    print('Таблиці та тригери створено.')
 
 
 @cli.command(help='Видалити таблиці в БД')
